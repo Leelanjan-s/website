@@ -54,10 +54,43 @@ export default function Contact({ selectedSegment }) {
       return;
     }
 
+    const endpointId = import.meta.env.VITE_FORMSPREE_ENDPOINT_ID;
+
+    // Graceful fallback to mock simulator if no endpoint configured
+    if (!endpointId) {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setSubmitState({ success: true, loading: false, error: false });
+      } catch (err) {
+        setSubmitState({ success: false, loading: false, error: true });
+      }
+      return;
+    }
+
     try {
-      // Mock API call (simulate Formspree/Web3Forms)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setSubmitState({ success: true, loading: false, error: false });
+      const response = await fetch(`https://formspree.io/f/${endpointId}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          company: values.company,
+          segment: values.segment,
+          type: values.type,
+          budget: values.budget,
+          timeline: values.timeline,
+          message: values.message
+        }),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' 
+        }
+      });
+
+      if (response.ok) {
+        setSubmitState({ success: true, loading: false, error: false });
+      } else {
+        setSubmitState({ success: false, loading: false, error: true });
+      }
     } catch (err) {
       setSubmitState({ success: false, loading: false, error: true });
     }
