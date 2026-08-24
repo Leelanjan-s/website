@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --studio-bg: #FBF8F3;
+    --studio-surface: #FFFFFF;
+    --studio-surface-alt: #F3EEE5;
+    --studio-text: #14141A;
+    --studio-text-muted: #5B5B66;
+    --studio-border: #E7E1D6;
+    --acid: #0B0C10; /* Black primary for light mode */
+    --acid-hover: #2A2C36;
+    --acid-text: #FFFFFF;
+    --accent-coral: #FF6B57;
+    --accent-yellow: #FFB627;
+    --accent-teal: #0EA5A0;
+    --accent-violet: #8B5CF6;
+  }
+
+  html.dark {
+    --studio-bg: #0B0C10;
+    --studio-surface: #15161C;
+    --studio-surface-alt: #1C1E26;
+    --studio-text: #F5F4F2;
+    --studio-text-muted: #9A9AA5;
+    --studio-border: #2A2C36;
+    --acid: #CCFF00; /* Acid green for dark mode */
+    --acid-hover: #B3E600;
+    --acid-text: #0B0C10;
+    --accent-coral: #CCFF00;
+    --accent-yellow: #CCFF00;
+    --accent-teal: #CCFF00;
+    --accent-violet: #CCFF00;
+  }
+
+  body {
+    background-color: var(--studio-bg);
+    color: var(--studio-text);
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--accent-coral);
+    color: var(--studio-bg);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--studio-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--studio-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-coral);
+  }
+}
+
+@layer utilities {
+  .text-outline {
+    -webkit-text-stroke: 1.2px rgba(138, 142, 136, 0.4);
+    color: transparent;
+  }
+  .group:hover .text-outline {
+    -webkit-text-stroke-color: var(--accent-coral);
+  }
+}
+
+/* Noise overlay */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+/* Gradient Blob */
+.blob {
+  filter: blur(80px);
+  animation: floatBlob 20s infinite alternate ease-in-out;
+  opacity: 0.15;
+}
+html.dark .blob {
+  opacity: 0.08;
+}
+
+@keyframes floatBlob {
+  0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  33% { transform: translate(40px, -60px) scale(1.2) rotate(120deg); }
+  66% { transform: translate(-30px, 30px) scale(0.8) rotate(240deg); }
+  100% { transform: translate(0px, 0px) scale(1) rotate(360deg); }
+}
+
+/* Infinite Marquee */
+.marquee-track {
+  animation: marquee 35s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
