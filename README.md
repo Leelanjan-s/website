@@ -42,7 +42,18 @@ Install all required Node modules:
 npm install
 ```
 
-### Step 3: Run the Development Server
+### Step 3: Configure Environment Variables (Optional)
+To set up email notifications for contact form submissions:
+1. Copy `.env.example` to create a `.env` file:
+   * **macOS**: `cp .env.example .env`
+   * **Windows**: `copy .env.example .env`
+2. Open `.env` and set your Formspree ID:
+   ```env
+   VITE_FORMSPREE_ENDPOINT_ID=your_formspree_id_here
+   ```
+*(If left empty, the contact form runs in a mock simulation mode locally.)*
+
+### Step 4: Run the Development Server
 Start the local server to run the site on your machine:
 ```bash
 npm run dev
@@ -51,14 +62,14 @@ npm run dev
 * Open that address in your web browser to view the site live.
 * Any code changes you make will automatically update in the browser (Hot Module Replacement).
 
-### Step 4: Build for Production
+### Step 5: Build for Production
 To build a production-optimized version of the website:
 ```bash
 npm run build
 ```
 The compiled, ready-to-deploy static assets will be outputted to the `dist/` directory.
 
-### Step 5: Preview Production Build
+### Step 6: Preview Production Build
 To test the built production assets locally before deploying:
 ```bash
 npm run preview
@@ -95,6 +106,7 @@ website/
 │   ├── App.jsx                # Layout orchestrator and theme state coordinator
 │   ├── index.css              # CSS custom variables & utilities (Swiss Grid system)
 │   └── main.jsx               # Application DOM entry initialization mount
+├── .env.example               # Example configurations for environment variables
 ├── .gitignore                 # Excludes node_modules/ & build outputs from Git
 ├── package.json               # Dependencies list & run scripts configurations
 ├── tailwind.config.js         # Tailwind theme styling parameters
